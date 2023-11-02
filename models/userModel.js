@@ -1,8 +1,8 @@
+const bcrypt = require("bcryptjs/dist/bcrypt");
+const asyncHandler = require("express-async-handler");
 const mongoose = require("mongoose");
-const bcrypt = require("bcryptjs");
-const { ObjectId } = mongoose.Schema;
 
-const userSchema = mongoose.Schema(
+const userSchema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -10,7 +10,7 @@ const userSchema = mongoose.Schema(
     },
     email: {
       type: String,
-      required: [true, "Please add a email"],
+      required: [true, "Please add an email"],
       unique: true,
       trim: true,
       match: [
@@ -22,7 +22,6 @@ const userSchema = mongoose.Schema(
       type: String,
       required: [true, "Please add a password"],
       minLength: [6, "Password must be up to 6 characters"],
-      //   maxLength: [23, "Password must not be more than 23 characters"],
     },
     role: {
       type: String,
@@ -43,40 +42,23 @@ const userSchema = mongoose.Schema(
       type: Object,
       // address, state, country
     },
-    wishlist: [{ type: ObjectId, ref: "Product" }],
-    balance: {
-      type: Number,
-      default: 0,
-    },
-    cartItems: {
-      type: [Object],
-    },
-    isVerified: {
-      type: Boolean,
-      default: false,
-    },
-    stripeCustomerId: {
-      type: String,
-      // required: true,
-    },
   },
   {
     timestamps: true,
   }
 );
-
-//   Encrypt password before saving to DB
+// Encrypt pass before saving to DB
 userSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) {
+  if (!this.isModified()) {
     return next();
   }
 
-  // Hash password
+  // Hash Password
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(this.password, salt);
   this.password = hashedPassword;
   next();
 });
 
-const User = mongoose.model("User", userSchema);
+const User = new mongoose.model("user", userSchema);
 module.exports = User;

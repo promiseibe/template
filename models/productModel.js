@@ -1,75 +1,69 @@
 const mongoose = require("mongoose");
 
-const productSchema = mongoose.Schema(
-  {
-    // user: {
-    //   type: mongoose.Schema.Types.ObjectId,
-    //   required: true,
-    //   ref: "User",
-    // },
+const productSchema = mongoose.Schema({
     name: {
-      type: String,
-      required: [true, "Please add a name"],
-      trim: true,
+        type: String,
+        required: [true, "Please Input a name"],
+        trim: true
     },
     sku: {
-      type: String,
-      required: true,
-      default: "SKU",
-      trim: true,
+        type: String,
+        required: true,
+        default: "SKU",
+        trim: true
     },
     category: {
-      type: String,
-      required: [true, "Please add a category"],
-      trim: true,
+        type: String,
+        required: [true, "Please input a category"],
+        trim: true,      
     },
-    brand: {
-      type: String,
-      required: [true, "Please add a brand"],
-      trim: true,
+    brand : {
+        type: String,
+        required: [true, "Please add a brand"],
+        trim: true,
+        
     },
     color: {
-      type: String,
-      required: [true, "Please add a color"],
-      default: "As seen",
-      trim: true,
+        type: String,
+        required: [true, "Please add a color"],
+        default: "As seen",
+        trim: true,
     },
     quantity: {
-      type: Number,
-      required: [true, "Please add a quantity"],
-      trim: true,
+        type: Number,
+        required: [true, "Please add a color"],
+        trim: true,
     },
     sold: {
-      type: Number,
-      default: 0,
-      trim: true,
-    },
-    price: {
-      type: String,
-      required: [true, "Please add a price"],
-      trim: true,
+        type: Number,
+        default: 0,
+        trim: true,
     },
     regularPrice: {
-      type: String,
-      // required: [true, "Please add a price"],
-      trim: true,
+        type: Number,
+        // required: [true, "Please add a color"],
+        trim: true,
+    },
+    price: {
+        type: Number,
+        required: [true, "Please add a Price"],
+        trim: true,
     },
     description: {
-      type: String,
-      required: [true, "Please add a description"],
-      trim: true,
+        type: String,
+        required: [true, "Please add a description"],
+        trim: true,
     },
     image: {
-      type: [String],
+        type: [String],
     },
     ratings: {
-      type: [Object],
+        type: [Object],
     },
-  },
-  {
-    timestamps: true,
-  }
-);
+}, 
+{
+    timestamps: true
+})
 
-const Product = mongoose.model("Product", productSchema);
-module.exports = Product;
+const Product = new mongoose.model("product", productSchema)
+module.exports = Product
